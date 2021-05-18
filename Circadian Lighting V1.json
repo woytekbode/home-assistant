@@ -1,0 +1,692 @@
+[
+	{
+		"id": "8ec33a0d.de6b88",
+		"type": "tab",
+		"label": "Circadian",
+		"disabled": false,
+		"info": ""
+	},
+	{
+		"id": "23be6967.468606",
+		"type": "inject",
+		"z": "8ec33a0d.de6b88",
+		"name": "Initialise parameters",
+		"props": [
+			{
+				"p": "payload"
+			}
+		],
+		"repeat": "",
+		"crontab": "",
+		"once": true,
+		"onceDelay": "0.1",
+		"topic": "",
+		"payload": "",
+		"payloadType": "date",
+		"x": 160,
+		"y": 60,
+		"wires": [
+			[
+				"f6c14878.0e34b8",
+				"36737335.522a7c",
+				"e780ef7e.05ca"
+			]
+		]
+	},
+	{
+		"id": "f6c14878.0e34b8",
+		"type": "change",
+		"z": "8ec33a0d.de6b88",
+		"name": "Color Temperature",
+		"rules": [
+			{
+				"t": "set",
+				"p": "#:(store)::color_temperature",
+				"pt": "global",
+				"to": "#:(store)::color_temperature_previous",
+				"tot": "flow"
+			},
+			{
+				"t": "set",
+				"p": "color_temperature_day",
+				"pt": "flow",
+				"to": "6000",
+				"tot": "num"
+			},
+			{
+				"t": "set",
+				"p": "color_temperature_evening",
+				"pt": "flow",
+				"to": "2200",
+				"tot": "num"
+			},
+			{
+				"t": "set",
+				"p": "color_temperature_day_transition",
+				"pt": "flow",
+				"to": "60000",
+				"tot": "num"
+			},
+			{
+				"t": "set",
+				"p": "color_temperature_evening_transition",
+				"pt": "flow",
+				"to": "60000",
+				"tot": "num"
+			}
+		],
+		"action": "",
+		"property": "",
+		"from": "",
+		"to": "",
+		"reg": false,
+		"x": 410,
+		"y": 60,
+		"wires": [
+			[]
+		]
+	},
+	{
+		"id": "36737335.522a7c",
+		"type": "change",
+		"z": "8ec33a0d.de6b88",
+		"name": "Brightness",
+		"rules": [
+			{
+				"t": "set",
+				"p": "#:(store)::brightness",
+				"pt": "global",
+				"to": "#:(store)::brightness_previous",
+				"tot": "flow"
+			},
+			{
+				"t": "set",
+				"p": "brightness_day",
+				"pt": "flow",
+				"to": "100",
+				"tot": "num"
+			},
+			{
+				"t": "set",
+				"p": "brightness_evening",
+				"pt": "flow",
+				"to": "70",
+				"tot": "num"
+			},
+			{
+				"t": "set",
+				"p": "brightness_night",
+				"pt": "flow",
+				"to": "1",
+				"tot": "num"
+			},
+			{
+				"t": "set",
+				"p": "brightness_day_transition",
+				"pt": "flow",
+				"to": "60000",
+				"tot": "num"
+			},
+			{
+				"t": "set",
+				"p": "brightness_evening_transition",
+				"pt": "flow",
+				"to": "60000",
+				"tot": "num"
+			},
+			{
+				"t": "set",
+				"p": "brightness_night_transition",
+				"pt": "flow",
+				"to": "60000",
+				"tot": "num"
+			}
+		],
+		"action": "",
+		"property": "",
+		"from": "",
+		"to": "",
+		"reg": false,
+		"x": 390,
+		"y": 100,
+		"wires": [
+			[]
+		]
+	},
+	{
+		"id": "e780ef7e.05ca",
+		"type": "change",
+		"z": "8ec33a0d.de6b88",
+		"name": "Other global parameters",
+		"rules": [
+			{
+				"t": "set",
+				"p": "transition_interval",
+				"pt": "flow",
+				"to": "5000",
+				"tot": "num"
+			},
+			{
+				"t": "set",
+				"p": "onoff_transition",
+				"pt": "global",
+				"to": "1",
+				"tot": "num"
+			},
+			{
+				"t": "set",
+				"p": "change_transition",
+				"pt": "global",
+				"to": "5",
+				"tot": "num"
+			}
+		],
+		"action": "",
+		"property": "",
+		"from": "",
+		"to": "",
+		"reg": false,
+		"x": 430,
+		"y": 140,
+		"wires": [
+			[]
+		]
+	},
+	{
+		"id": "944bcd06.d19a",
+		"type": "switch",
+		"z": "8ec33a0d.de6b88",
+		"name": "",
+		"property": "payload",
+		"propertyType": "msg",
+		"rules": [
+			{
+				"t": "eq",
+				"v": "day",
+				"vt": "str"
+			},
+			{
+				"t": "eq",
+				"v": "evening",
+				"vt": "str"
+			}
+		],
+		"checkall": "true",
+		"repair": false,
+		"outputs": 2,
+		"x": 370,
+		"y": 260,
+		"wires": [
+			[
+				"e1acfb3c.34b0b8"
+			],
+			[
+				"644e7ca5.712d34"
+			]
+		]
+	},
+	{
+		"id": "231293cd.a6d5dc",
+		"type": "easing",
+		"z": "8ec33a0d.de6b88",
+		"name": "Transition",
+		"easingType": "easeInOutSine",
+		"outputType": "overTime",
+		"duration": 1000,
+		"interval": 50,
+		"numberOfValues": 10,
+		"x": 800,
+		"y": 260,
+		"wires": [
+			[
+				"3d3e29ff.c302a6"
+			]
+		]
+	},
+	{
+		"id": "e1acfb3c.34b0b8",
+		"type": "template",
+		"z": "8ec33a0d.de6b88",
+		"name": "Color Temp Day",
+		"field": "payload",
+		"fieldType": "msg",
+		"format": "handlebars",
+		"syntax": "mustache",
+		"template": "{\n    \"from\": {{flow[store].color_temperature_previous}},\n    \"to\": {{flow.color_temperature_day}},\n    \"duration\": {{flow.color_temperature_day_transition}},\n    \"interval\": {{flow.transition_interval}}\n}",
+		"output": "json",
+		"x": 560,
+		"y": 240,
+		"wires": [
+			[
+				"231293cd.a6d5dc",
+				"dbe5d336.8bc6d"
+			]
+		]
+	},
+	{
+		"id": "3d3e29ff.c302a6",
+		"type": "change",
+		"z": "8ec33a0d.de6b88",
+		"name": "Save new color temp",
+		"rules": [
+			{
+				"t": "set",
+				"p": "#:(store)::color_temperature",
+				"pt": "global",
+				"to": "payload",
+				"tot": "msg"
+			}
+		],
+		"action": "",
+		"property": "",
+		"from": "",
+		"to": "",
+		"reg": false,
+		"x": 1020,
+		"y": 260,
+		"wires": [
+			[]
+		]
+	},
+	{
+		"id": "644e7ca5.712d34",
+		"type": "template",
+		"z": "8ec33a0d.de6b88",
+		"name": "Color Temp Evening",
+		"field": "payload",
+		"fieldType": "msg",
+		"format": "handlebars",
+		"syntax": "mustache",
+		"template": "{\n    \"from\": {{flow[store].color_temperature_previous}},\n    \"to\": {{flow.color_temperature_evening}},\n    \"duration\": {{flow.color_temperature_evening_transition}},\n    \"interval\": {{flow.transition_interval}}\n}",
+		"output": "json",
+		"x": 580,
+		"y": 280,
+		"wires": [
+			[
+				"231293cd.a6d5dc",
+				"dbe5d336.8bc6d"
+			]
+		]
+	},
+	{
+		"id": "a8b9932f.9311a",
+		"type": "easing",
+		"z": "8ec33a0d.de6b88",
+		"name": "Transition",
+		"easingType": "easeInOutSine",
+		"outputType": "overTime",
+		"duration": 1000,
+		"interval": 50,
+		"numberOfValues": 10,
+		"x": 800,
+		"y": 400,
+		"wires": [
+			[
+				"c1e9e9be.576ca8"
+			]
+		]
+	},
+	{
+		"id": "b65cde80.5c752",
+		"type": "template",
+		"z": "8ec33a0d.de6b88",
+		"name": "Brightness Day",
+		"field": "payload",
+		"fieldType": "msg",
+		"format": "handlebars",
+		"syntax": "mustache",
+		"template": "{\n    \"from\": {{flow[store].brightness_previous}},\n    \"to\": {{flow.brightness_day}},\n    \"duration\": {{flow.brightness_day_transition}},\n    \"interval\": {{flow.transition_interval}}\n}",
+		"output": "json",
+		"x": 560,
+		"y": 380,
+		"wires": [
+			[
+				"a8b9932f.9311a",
+				"39635774.3d5498"
+			]
+		]
+	},
+	{
+		"id": "c1e9e9be.576ca8",
+		"type": "change",
+		"z": "8ec33a0d.de6b88",
+		"name": "Save new brightness",
+		"rules": [
+			{
+				"t": "set",
+				"p": "#:(store)::brightness",
+				"pt": "global",
+				"to": "payload",
+				"tot": "msg"
+			}
+		],
+		"action": "",
+		"property": "",
+		"from": "",
+		"to": "",
+		"reg": false,
+		"x": 1020,
+		"y": 400,
+		"wires": [
+			[]
+		]
+	},
+	{
+		"id": "157b0554.9cf23b",
+		"type": "switch",
+		"z": "8ec33a0d.de6b88",
+		"name": "",
+		"property": "payload",
+		"propertyType": "msg",
+		"rules": [
+			{
+				"t": "eq",
+				"v": "day",
+				"vt": "str"
+			},
+			{
+				"t": "eq",
+				"v": "evening",
+				"vt": "str"
+			},
+			{
+				"t": "eq",
+				"v": "night",
+				"vt": "str"
+			}
+		],
+		"checkall": "true",
+		"repair": false,
+		"outputs": 3,
+		"x": 370,
+		"y": 400,
+		"wires": [
+			[
+				"b65cde80.5c752"
+			],
+			[
+				"c1a172d7.cf89d"
+			],
+			[
+				"6aa629b2.a72d48"
+			]
+		]
+	},
+	{
+		"id": "c1a172d7.cf89d",
+		"type": "template",
+		"z": "8ec33a0d.de6b88",
+		"name": "Brightness Evening",
+		"field": "payload",
+		"fieldType": "msg",
+		"format": "handlebars",
+		"syntax": "mustache",
+		"template": "{\n    \"from\": {{flow[store].brightness_previous}},\n    \"to\": {{flow.brightness_evening}},\n    \"duration\": {{flow.brightness_evening_transition}},\n    \"interval\": {{flow.transition_interval}}\n}",
+		"output": "json",
+		"x": 570,
+		"y": 420,
+		"wires": [
+			[
+				"a8b9932f.9311a",
+				"39635774.3d5498"
+			]
+		]
+	},
+	{
+		"id": "68c5bda.6b4b644",
+		"type": "cronplus",
+		"z": "8ec33a0d.de6b88",
+		"name": "Brightness Schedule",
+		"outputField": "payload",
+		"timeZone": "",
+		"persistDynamic": false,
+		"commandResponseMsgOutput": "output1",
+		"outputs": 1,
+		"options": [
+			{
+				"name": "weekdays morning",
+				"topic": "schedule1",
+				"payloadType": "str",
+				"payload": "evening",
+				"expressionType": "cron",
+				"expression": "0 0 7 ? * MON-FRI *",
+				"location": "",
+				"offset": "0",
+				"solarType": "all",
+				"solarEvents": "sunrise,sunset"
+			}
+		],
+		"x": 160,
+		"y": 400,
+		"wires": [
+			[
+				"157b0554.9cf23b"
+			]
+		]
+	},
+	{
+		"id": "9f17feeb.cfcff",
+		"type": "cronplus",
+		"z": "8ec33a0d.de6b88",
+		"name": "Color Temp Schedule",
+		"outputField": "payload",
+		"timeZone": "",
+		"persistDynamic": false,
+		"commandResponseMsgOutput": "output1",
+		"outputs": 1,
+		"options": [
+			{
+				"name": "weekdays morning",
+				"topic": "schedule1",
+				"payloadType": "str",
+				"payload": "evening",
+				"expressionType": "cron",
+				"expression": "0 0 7 ? * MON-FRI *",
+				"location": "",
+				"offset": "0",
+				"solarType": "all",
+				"solarEvents": "sunrise,sunset"
+			}
+		],
+		"x": 160,
+		"y": 260,
+		"wires": [
+			[
+				"944bcd06.d19a"
+			]
+		]
+	},
+	{
+		"id": "dbe5d336.8bc6d",
+		"type": "change",
+		"z": "8ec33a0d.de6b88",
+		"name": "Save previous color temp",
+		"rules": [
+			{
+				"t": "set",
+				"p": "#:(store)::color_temperature_previous",
+				"pt": "flow",
+				"to": "payload.to",
+				"tot": "msg"
+			}
+		],
+		"action": "",
+		"property": "",
+		"from": "",
+		"to": "",
+		"reg": false,
+		"x": 850,
+		"y": 220,
+		"wires": [
+			[]
+		]
+	},
+	{
+		"id": "39635774.3d5498",
+		"type": "change",
+		"z": "8ec33a0d.de6b88",
+		"name": "Save previous brightness",
+		"rules": [
+			{
+				"t": "set",
+				"p": "#:(store)::brightness_previous",
+				"pt": "flow",
+				"to": "payload.to",
+				"tot": "msg"
+			}
+		],
+		"action": "",
+		"property": "",
+		"from": "",
+		"to": "",
+		"reg": false,
+		"x": 850,
+		"y": 360,
+		"wires": [
+			[]
+		]
+	},
+	{
+		"id": "6aa629b2.a72d48",
+		"type": "template",
+		"z": "8ec33a0d.de6b88",
+		"name": "Brightness Night",
+		"field": "payload",
+		"fieldType": "msg",
+		"format": "handlebars",
+		"syntax": "mustache",
+		"template": "{\n    \"from\": {{flow[store].brightness_previous}},\n    \"to\": {{flow.brightness_night}},\n    \"duration\": {{flow.brightness_night_transition}},\n    \"interval\": {{flow.transition_interval}}\n}",
+		"output": "json",
+		"x": 560,
+		"y": 460,
+		"wires": [
+			[
+				"a8b9932f.9311a",
+				"39635774.3d5498"
+			]
+		]
+	},
+	{
+		"id": "c13091bc.26ede",
+		"type": "api-call-service",
+		"z": "8ec33a0d.de6b88",
+		"name": "Turn on light",
+		"server": "7ef24100.fef05",
+		"version": 1,
+		"debugenabled": false,
+		"service_domain": "light",
+		"service": "turn_on",
+		"entityId": "light.livingroom_table_light",
+		"data": "{}",
+		"dataType": "jsonata",
+		"mergecontext": "",
+		"output_location": "",
+		"output_location_type": "none",
+		"mustacheAltTags": false,
+		"x": 490,
+		"y": 580,
+		"wires": [
+			[]
+		]
+	},
+	{
+		"id": "1e11417d.3069df",
+		"type": "inject",
+		"z": "8ec33a0d.de6b88",
+		"name": "Test light",
+		"props": [
+			{
+				"p": "payload"
+			},
+			{
+				"p": "topic",
+				"vt": "str"
+			}
+		],
+		"repeat": "",
+		"crontab": "",
+		"once": false,
+		"onceDelay": 0.1,
+		"topic": "",
+		"payload": "",
+		"payloadType": "date",
+		"x": 120,
+		"y": 580,
+		"wires": [
+			[
+				"2a6bb1eb.69b1be"
+			]
+		]
+	},
+	{
+		"id": "2a6bb1eb.69b1be",
+		"type": "template",
+		"z": "8ec33a0d.de6b88",
+		"name": "Light data",
+		"field": "payload",
+		"fieldType": "msg",
+		"format": "handlebars",
+		"syntax": "mustache",
+		"template": "{\n\"data\":\n    {\n        \"transition\": {{global.onoff_transition}},\n        \"kelvin\": {{global[store].color_temperature}},\n        \"brightness_pct\": {{global[store].brightness}}\n    }\n}",
+		"output": "json",
+		"x": 300,
+		"y": 580,
+		"wires": [
+			[
+				"c13091bc.26ede"
+			]
+		]
+	},
+	{
+		"id": "ed2705b5.9c1a18",
+		"type": "api-call-service",
+		"z": "8ec33a0d.de6b88",
+		"name": "Turn off light",
+		"server": "7ef24100.fef05",
+		"version": 1,
+		"debugenabled": false,
+		"service_domain": "light",
+		"service": "turn_off",
+		"entityId": "light.livingroom_table_light",
+		"data": "",
+		"dataType": "jsonata",
+		"mergecontext": "",
+		"output_location": "",
+		"output_location_type": "none",
+		"mustacheAltTags": false,
+		"x": 490,
+		"y": 640,
+		"wires": [
+			[]
+		]
+	},
+	{
+		"id": "8ef3adbd.97008",
+		"type": "inject",
+		"z": "8ec33a0d.de6b88",
+		"name": "Test light",
+		"props": [
+			{
+				"p": "payload"
+			},
+			{
+				"p": "topic",
+				"vt": "str"
+			}
+		],
+		"repeat": "",
+		"crontab": "",
+		"once": false,
+		"onceDelay": 0.1,
+		"topic": "",
+		"payload": "",
+		"payloadType": "date",
+		"x": 120,
+		"y": 640,
+		"wires": [
+			[
+				"ed2705b5.9c1a18"
+			]
+		]
+	}
+]
